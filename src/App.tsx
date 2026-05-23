@@ -28,6 +28,7 @@ import {
   Lock, 
   Unlock, 
   ArrowRight, 
+  ArrowLeft,
   Star, 
   MessageSquare, 
   Settings, 
@@ -1270,15 +1271,14 @@ export default function App() {
 
               {/* Secure Developer Hint Card */}
               <div className="mt-8 pt-6 border-t border-[#111] text-center">
-                <div className="inline-block p-3.5 bg-[#080808] border border-[#111] w-full text-left">
-                  <p className="text-[8px] font-mono text-[#444] tracking-[0.2em] font-black uppercase mb-1">DEVELOPER SIGN-IN SCHEME</p>
-                  <p className="text-[10px] text-[#888] font-mono leading-relaxed mt-1">
-                    <span className="text-[#00F0FF]">USER:</span> pixelframe.indonesia@gmail.com
-                  </p>
-                  <p className="text-[10px] text-[#888] font-mono leading-relaxed">
-                    <span className="text-[#00F0FF]">KEY:</span> Masitohddx1
-                  </p>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAdmin(false)}
+                  className="w-full py-4 rounded-none font-black text-xs uppercase tracking-[0.25em] text-[#888] hover:text-[#00F0FF] bg-[#0c0c0c] border border-[#222] hover:border-[#00F0FF] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>KEMBALI KE WEB</span>
+                </button>
               </div>
 
             </div>
