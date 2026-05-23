@@ -1,0 +1,6 @@
+{
+  "name": "PixelFrame Studio Indonesia",
+  "description": "Portofolio interaktif dan biodata PixelFrame Studio Indonesia, lengkap dengan database dinamis Supabase dan admin panel modern.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
