@@ -1927,6 +1927,26 @@ export default function App() {
         </div>
       )}
 
+      {/* Floating WhatsApp Button */}
+      <a 
+        href="https://wa.me/6285719123123"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-40 group flex items-center justify-center w-14 h-14 bg-[#00F0FF] hover:bg-white text-neutral-950 rounded-full shadow-[0_10px_30px_rgba(0,240,255,0.3)] hover:shadow-[0_15px_35px_rgba(0,240,255,0.5)] transition-all duration-300 hover:-translate-y-1"
+        id="whatsapp-floating-button"
+      >
+        <svg 
+          className="w-6 h-6 fill-current shrink-0" 
+          viewBox="0 0 24 24" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.1 1.45 4.7 1.45 5.3 0 9.6-4.3 9.6-9.6s-4.3-9.6-9.6-9.6-9.6 4.3-9.6 9.6c0 1.8.5 3.5 1.4 5l-.3 1 1.1-.3zm11.5-6.1c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.2-.1.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5-.1-.2-.7-1.7-1-2.4-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.1-1.3-.1-.2-.3-.3-.6-.4z"/>
+        </svg>
+        
+        {/* Pulsing ring background */}
+        <span className="absolute inset-0 rounded-full border-2 border-[#00F0FF] animate-ping opacity-45 pointer-events-none" />
+      </a>
+
     </div>
   );
 }
