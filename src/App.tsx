@@ -40,7 +40,9 @@ import {
   Search, 
   AlertCircle, 
   Calendar,
-  CheckCircle2
+  CheckCircle2,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { 
   db, 
@@ -92,6 +94,13 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [isUsingSupabase, setIsUsingSupabase] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    return sessionStorage.getItem('isAdminLoggedIn') === 'true';
+  });
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState('');
   const [activeAdminTab, setActiveAdminTab] = useState<'supabase' | 'studio' | 'portfolios' | 'messages' | 'testimonials'>('supabase');
   
   // Custom Portfolio Grid Filtering
@@ -218,6 +227,23 @@ export default function App() {
       console.error(err);
     } finally {
       setFormSubmitting(false);
+    }
+  };
+
+  // Secure admin login submission
+  const handleAdminLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmedEmail = loginEmail.trim();
+    const trimmedPassword = loginPassword.trim();
+    
+    if (trimmedEmail === 'pixelframe.indonesia@gmail.com' && trimmedPassword === 'pixelframe2026') {
+      setIsAdminLoggedIn(true);
+      sessionStorage.setItem('isAdminLoggedIn', 'true');
+      setLoginError('');
+    } else if (!trimmedEmail || !trimmedPassword) {
+      setLoginError('Harap masukkan email dan secure access key.');
+    } else {
+      setLoginError('Akses Ditolak: Kredensial tidak valid!');
     }
   };
 
@@ -1165,24 +1191,131 @@ export default function App() {
         <div className="fixed inset-0 z-50 bg-neutral-950/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
           <div className="absolute inset-0" onClick={() => setShowAdmin(false)} />
           
-          <div className="relative w-full max-w-5xl bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.9)] z-10 text-left my-4 flex flex-col h-[90vh]">
-            
-            {/* Header of Admin Panel */}
-            <div className="px-6 py-4 bg-neutral-950 border-b border-neutral-800 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Settings className="w-5 h-5 text-cyan-400 animate-spin-slow" />
+          {!isAdminLoggedIn ? (
+            /* SECURE HIGH-POLISHED BRUTALIST LOGIN CARD */
+            <div className="relative w-full max-w-md bg-[#050505] border border-[#222] rounded-none p-8 hover:border-[#00F0FF] transition-all duration-500 shadow-[0_0_50px_rgba(0,240,255,0.1)] z-10 text-left my-8 select-none">
+              <button 
+                type="button"
+                onClick={() => setShowAdmin(false)}
+                className="absolute top-4 right-4 p-1 rounded-none border border-[#222] bg-[#050505] text-[#888] hover:text-[#00F0FF] hover:border-[#00F0FF] transition cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="text-center mb-8">
+                {/* Visual Lock Accent Icon inside PixelFrame square border */}
+                <div className="w-16 h-16 rounded-none bg-[#050505] border-2 border-[#222] flex items-center justify-center mx-auto mb-4 p-2 relative">
+                  <Lock className="w-6 h-6 text-[#00F0FF]" />
+                  <div className="absolute -inset-0.5 border border-dashed border-[#00F0FF]/30 animate-pulse pointer-events-none rounded-none" />
+                </div>
+                <h3 className="text-lg font-black uppercase tracking-[0.2em] text-white">SYSTEM DECRYPTION</h3>
+                <p className="text-[9px] text-[#666] font-mono tracking-widest uppercase mt-1">PIXELFRAME REVOLUTIONARY ENGINE v1.0</p>
+              </div>
+
+              {loginError && (
+                <div className="mb-6 p-4 bg-rose-950/20 border border-rose-800/80 text-rose-400 text-[10px] font-black uppercase tracking-wider flex items-center gap-2">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  <span>{loginError}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleAdminLoginSubmit} className="space-y-5">
                 <div>
-                  <h3 className="text-lg font-bold text-white">PixelFrame Control Center</h3>
-                  <p className="text-xs text-neutral-500">Urus database, biodata, dan data portofolio real-time Supabase</p>
+                  <label className="block text-[9px] font-black tracking-[0.25em] text-[#666] uppercase mb-1.5 font-mono">
+                    ADMIN IDENTITY CARD
+                  </label>
+                  <div className="relative">
+                    <input 
+                      type="email" 
+                      required
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
+                      placeholder="Enter Admin Email"
+                      className="w-full px-4 py-3 bg-[#050505] border border-[#222] rounded-none text-[#F0F0F0] placeholder-[#333] focus:outline-none focus:border-[#00F0FF] text-xs uppercase tracking-wider transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[9px] font-black tracking-[0.25em] text-[#666] uppercase mb-1.5 font-mono">
+                    SECURE ACCESS PIN / DECRYPT PASS
+                  </label>
+                  <div className="relative">
+                    <input 
+                      type={showPassword ? 'text' : 'password'} 
+                      required
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                      placeholder="Enter Access Key"
+                      className="w-full pl-4 pr-10 py-3 bg-[#050505] border border-[#222] rounded-none text-[#F0F0F0] placeholder-[#333] focus:outline-none focus:border-[#00F0FF] text-xs uppercase tracking-wider transition-all"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-3 flex items-center text-[#555] hover:text-[#00F0FF]"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <button 
+                  type="submit"
+                  className="w-full py-4 rounded-none font-black text-xs uppercase tracking-[0.25em] text-neutral-950 bg-[#00F0FF] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer mt-2"
+                >
+                  <Unlock className="w-3.5 h-3.5" />
+                  <span>AUTHORIZE ENTRY</span>
+                </button>
+              </form>
+
+              {/* Secure Developer Hint Card */}
+              <div className="mt-8 pt-6 border-t border-[#111] text-center">
+                <div className="inline-block p-3.5 bg-[#080808] border border-[#111] w-full text-left">
+                  <p className="text-[8px] font-mono text-[#444] tracking-[0.2em] font-black uppercase mb-1">DEVELOPER SIGN-IN SCHEME</p>
+                  <p className="text-[10px] text-[#888] font-mono leading-relaxed mt-1">
+                    <span className="text-[#00F0FF]">USER:</span> pixelframe.indonesia@gmail.com
+                  </p>
+                  <p className="text-[10px] text-[#888] font-mono leading-relaxed">
+                    <span className="text-[#00F0FF]">KEY:</span> pixelframe2026
+                  </p>
                 </div>
               </div>
-              <button 
-                onClick={() => setShowAdmin(false)}
-                className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white transition"
-              >
-                <X className="w-5 h-5" />
-              </button>
+
             </div>
+          ) : (
+            <div className="relative w-full max-w-5xl bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.9)] z-10 text-left my-4 flex flex-col h-[90vh]">
+              
+              {/* Header of Admin Panel */}
+              <div className="px-6 py-4 bg-neutral-950 border-b border-neutral-800 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Settings className="w-5 h-5 text-cyan-400 animate-spin-slow" />
+                  <div>
+                    <h3 className="text-lg font-bold text-white">PixelFrame Control Center</h3>
+                    <p className="text-xs text-neutral-500">Urus database, biodata, dan data portofolio real-time Supabase</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAdminLoggedIn(false);
+                      sessionStorage.removeItem('isAdminLoggedIn');
+                    }}
+                    className="px-3 py-1.5 rounded-none border border-rose-950 bg-rose-950/20 text-rose-400 hover:bg-rose-900 hover:text-white transition text-[9px] uppercase tracking-wider font-extrabold flex items-center gap-1.5"
+                    title="Sign Out Session"
+                  >
+                    <Lock className="w-3 h-3" />
+                    <span>LOGOUT</span>
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setShowAdmin(false)}
+                    className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white transition"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
 
             {/* Layout Split: Left Toggles vs Right Panel Content */}
             <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
@@ -1790,6 +1923,7 @@ export default function App() {
             </div>
 
           </div>
+          )}
         </div>
       )}
 
