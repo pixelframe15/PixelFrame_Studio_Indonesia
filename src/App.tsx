@@ -236,7 +236,7 @@ export default function App() {
     const trimmedEmail = loginEmail.trim();
     const trimmedPassword = loginPassword.trim();
     
-    if (trimmedEmail === 'pixelframe.indonesia@gmail.com' && trimmedPassword === 'pixelframe2026') {
+    if (trimmedEmail === 'pixelframe.indonesia@gmail.com' && trimmedPassword === 'Masitohddx1') {
       setIsAdminLoggedIn(true);
       sessionStorage.setItem('isAdminLoggedIn', 'true');
       setLoginError('');
@@ -1276,7 +1276,7 @@ export default function App() {
                     <span className="text-[#00F0FF]">USER:</span> pixelframe.indonesia@gmail.com
                   </p>
                   <p className="text-[10px] text-[#888] font-mono leading-relaxed">
-                    <span className="text-[#00F0FF]">KEY:</span> pixelframe2026
+                    <span className="text-[#00F0FF]">KEY:</span> Masitohddx1
                   </p>
                 </div>
               </div>
